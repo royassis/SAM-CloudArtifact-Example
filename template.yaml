@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
+Parameters:
+  CodeartifactAuthToken:
+    Type: String
+
 Resources:
   TestFunction:
     Type: AWS::Serverless::Function
@@ -9,7 +13,7 @@ Resources:
       CodeUri: ./functions/test
       Environment:
         Variables:
-          CodeartifactAuthToken: '{{resolve:secretsmanager:CodeartifactAuthToken:SecretString:token}}'
+          CodeartifactAuthToken: !Ref CodeartifactAuthToken
     Metadata:
       Dockerfile: Dockerfile
       DockerContext: ./functions/test
